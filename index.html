@@ -3,28 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Dashboard</title>
+    <meta name="description" content="Multnomah Athletic Club Membership Analytics Dashboard - Interactive visualization for membership pipeline, financials, and census data">
+    <meta name="theme-color" content="#1e293b">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Membership Dashboard - Multnomah Athletic Club</title>
     
+    <!-- Tailwind CSS - Using CDN for rapid prototyping -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- React 18.3.1 - Pinned version for stability -->
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel Standalone 7.24.0 - PROTOTYPING ONLY: For production, use a proper build process with transpiled code -->
+    <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
 
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <!-- Recharts 2.12.7 - Charting library -->
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
     
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    <!-- Lucide React 0.263.1 - Icon library -->
+    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
 
     <style>
-        body { background-color: #f8fafc; }
+        body { 
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
-
-    <div id="root"></div>
+    <!-- Main application container - React will render the dashboard here -->
+    <div id="root" role="main" aria-label="Membership Dashboard Application"></div>
 
     <script type="text/babel">
+        // =============================================================================
+        // MEMBERSHIP DASHBOARD APPLICATION
+        // =============================================================================
+        // This dashboard provides interactive visualizations for membership analytics
+        // including pipeline tracking, financial metrics, and census data.
+        //
+        // NOTE: This file uses in-browser Babel transformation for prototyping.
+        // For production deployment, consider using a proper build process.
+        // =============================================================================
+
         // --- 1. SETUP LIBRARIES ---
         
         const { 
@@ -199,8 +221,8 @@
 
           return (
             <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
-              {/* Header */}
-              <header className="mb-8 border-b border-slate-200 pb-6">
+              {/* ==================== HEADER SECTION ==================== */}
+              <header className="mb-8 border-b border-slate-200 pb-6" role="banner">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   <div>
                     <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Membership Dashboard</h1>
@@ -219,9 +241,9 @@
                 </div>
               </header>
 
-              {/* YTD Snapshot Section */}
-              <div className="mb-10">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== YTD SNAPSHOT SECTION ==================== */}
+              <section className="mb-10" aria-labelledby="ytd-snapshot-heading">
+                <h2 id="ytd-snapshot-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   Membership Snapshot (YTD 2025)
                 </h2>
@@ -240,10 +262,11 @@
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
-              {/* Monthly KPIs */}
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== MONTHLY PERFORMANCE SECTION ==================== */}
+              <section aria-labelledby="monthly-performance-heading">
+              <h2 id="monthly-performance-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Monthly Performance
               </h2>
@@ -413,9 +436,11 @@
                   </div>
                 </div>
               </div>
+              </section>
 
-              {/* Financial Details Grid */}
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== FINANCIAL DETAILS SECTION ==================== */}
+              <section aria-labelledby="financial-details-heading">
+              <h2 id="financial-details-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Payments & Financial Details
               </h2>
@@ -432,10 +457,11 @@
                   </div>
                 ))}
               </div>
+              </section>
 
-              {/* 1. MAC PIPELINE: STAGE BREAKDOWN */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== MAC PIPELINE STAGE BREAKDOWN SECTION ==================== */}
+              <section className="mb-12" aria-labelledby="pipeline-breakdown-heading">
+                <h2 id="pipeline-breakdown-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Stage Breakdown (2025)
                 </h2>
@@ -457,11 +483,11 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              {/* 2. CASH & CAPITAL ECONOMICS */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== CASH & CAPITAL ECONOMICS SECTION ==================== */}
+              <section className="mb-12" aria-labelledby="cash-economics-heading">
+                <h2 id="cash-economics-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Cash & Capital Economics (2025)
                 </h2>
@@ -482,11 +508,11 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              {/* 3. PIPELINE FLOW DYNAMICS */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== PIPELINE FLOW DYNAMICS SECTION ==================== */}
+              <section className="mb-12" aria-labelledby="flow-dynamics-heading">
+                <h2 id="flow-dynamics-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-purple-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Pipeline Flow Dynamics (2025)
                 </h2>
@@ -551,11 +577,11 @@
                      </div>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              {/* --- CURRENT MEMBERSHIP CENSUS (SNAPSHOT) --- */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== CURRENT MEMBERSHIP CENSUS SECTION ==================== */}
+              <section className="mb-12" aria-labelledby="census-heading">
+                <h2 id="census-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-sky-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Current Membership Census (Snapshot)
                 </h2>
@@ -632,11 +658,11 @@
                         </div>
                      </div>
                 </div>
-              </div>
+              </section>
 
-              {/* --- COMMITTEE BUSINESS SECTION --- */}
-              <div className="mb-12">
-                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              {/* ==================== COMMITTEE UPDATES & BUSINESS SECTION ==================== */}
+              <section className="mb-12" aria-labelledby="committee-updates-heading">
+                 <h2 id="committee-updates-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-indigo-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Committee Updates & Business
                 </h2>
@@ -693,7 +719,7 @@
                         </ul>
                     </div>
                 </div>
-              </div>
+              </section>
             </div>
           );
         };
