@@ -497,7 +497,13 @@
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="month" tick={{fill: '#64748b'}} />
                         <YAxis yAxisId="left" tick={{fill: '#64748b'}} label={{ value: 'Movement (Count)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
-                        <YAxis yAxisId="right" orientation="right" tick={{fill: '#64748b'}} domain={[300, 450]} label={{ value: 'Total Pool (Count)', angle: 90, position: 'insideRight', fill: '#94a3b8' }} />
+                        <YAxis
+                          yAxisId="right"
+                          orientation="right"
+                          tick={{ fill: '#64748b' }}
+                          domain={[300, 450]}
+                          label={{ value: 'Total Pool (Count)', angle: 90, position: 'insideRight', fill: '#94a3b8' }}
+                        />
                         <Tooltip contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
                         <Legend />
                         <Bar yAxisId="left" dataKey="Inflow" fill="#10b981" name="New Apps (Inflow)" radius={[4, 4, 0, 0]} barSize={20} />
@@ -518,7 +524,7 @@
                      <div>
                         <h4 className="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2">How to Read This Chart: Flow & Inventory Dynamics</h4>
                         <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                           This visualization combines <strong>Throughput (Flow)</strong> and <strong>Pipeline Volume (Inventory)</strong> to demonstrate the efficiency and capacity of our membership intake process.
+                           This visualization combines <strong>Throughput (Flow)</strong> and <strong>Pipeline Volume (Inventory)</strong> to demonstrate the efficiency and capacity of our membership [...]
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
                            <div className="flex items-center text-sm">
@@ -661,15 +667,15 @@
                         <ul className="space-y-4">
                              <li className="text-sm text-slate-600">
                                 <span className="font-semibold text-slate-900 block mb-1">Redline Membership P&P</span>
-                                Request to accept housekeeping updates aligning P&P with current Club Rules and forms. Edits focus on "At Your Service" nomenclature updates and consistency regarding Nonresident property ownership definitions.
+                                Request to accept housekeeping updates aligning P&P with current Club Rules and forms. Edits focus on "At Your Service" nomenclature updates and consistency regarding N[...]
                             </li>
                             <li className="text-sm text-slate-600">
                                 <span className="font-semibold text-slate-900 block mb-1">Winged M December Spread</span>
-                                December issue features the 2026 dues announcement alongside a strategic "Membership Value" spread, directly incorporating themes and influence from the Membership Committee.
+                                December issue features the 2026 dues announcement alongside a strategic "Membership Value" spread, directly incorporating themes and influence from the Membership Comm[...]
                             </li>
                             <li className="text-sm text-slate-600">
                                 <span className="font-semibold text-slate-900 block mb-1">Policy Review: Divorce & Separation</span>
-                                Review of current workflow regarding "Delinquent Divorce" timelines and P&P adherence, including clarification on House Committee vs. Membership Committee purview for exception requests.
+                                Review of current workflow regarding "Delinquent Divorce" timelines and P&P adherence, including clarification on House Committee vs. Membership Committee purview for e[...]
                             </li>
                         </ul>
                     </div>
@@ -682,7 +688,7 @@
                         <ul className="space-y-4">
                             <li className="text-sm text-slate-600">
                                 <span className="font-semibold text-slate-900 block mb-1">Initiation Fee Audit Update</span>
-                                Full account audit is complete. Staff has moved to the individual outreach phase through December, with a target of final case resolutions and action plans in place by January.
+                                Full account audit is complete. Staff has moved to the individual outreach phase through December, with a target of final case resolutions and action plans in place by [...]
                             </li>
                         </ul>
                     </div>
