@@ -14,7 +14,7 @@
 
     <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
     
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
 
     <style>
         body { background-color: #f8fafc; }
@@ -26,37 +26,28 @@
 
     <script type="text/babel">
         // --- 1. SETUP LIBRARIES ---
-        // We have to "unpack" the tools since we aren't using an import statement
+        
         const { 
             BarChart, Bar, LineChart, Line, ComposedChart, Area, PieChart, Pie,
             XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, 
             Cell, ReferenceLine, LabelList 
         } = window.Recharts;
 
+        // We use window.lucideReact here to make sure icons render
         const { 
             Users, DollarSign, Activity, FileText, UserMinus, UserPlus, 
             TrendingDown, TrendingUp, Wallet, CheckCircle, FileCheck, 
             ClipboardList, UserCheck, ArrowRightLeft, Layers, BarChart3,
             Clock, AlertCircle, BookOpen, Info, MapPin, Calendar, User, Database
-        } = window.lucide;
+        } = window.lucideReact;
 
         // --- 2. YOUR DASHBOARD CODE STARTS HERE ---
 
         const MembershipDashboard = () => {
           // November Data
           const fluxData = [
-            {
-              name: 'Headcount',
-              New: 61,
-              Resigned: 53,
-              Net: 8
-            },
-            {
-              name: 'Accounts',
-              New: 35,
-              Resigned: 38,
-              Net: -3
-            }
+            { name: 'Headcount', New: 61, Resigned: 53, Net: 8 },
+            { name: 'Accounts', New: 35, Resigned: 38, Net: -3 }
           ];
 
           // Updated Pipeline Data for November
@@ -103,7 +94,7 @@
             { label: 'Reinstatements', value: 1477.54, icon: Activity, color: 'text-purple-600', bg: 'bg-purple-100' },
           ];
 
-          // YTD Metrics - UPDATED with "Accounts in Pipeline"
+          // YTD Metrics
           const ytdMetrics = [
             { label: 'Applications Reviewed', value: 380, icon: ClipboardList, color: 'text-blue-600', bg: 'bg-blue-50' },
             { label: 'New Members Onboarded', value: 327, icon: UserPlus, color: 'text-emerald-600', bg: 'bg-emerald-50' },
@@ -115,31 +106,21 @@
           ];
 
           const newAccountsBreakdown = [
-            { label: 'Family', value: 10 },
-            { label: 'Family of 2', value: 2 },
-            { label: 'Individual', value: 7 },
-            { label: 'Individual Under 30', value: 9 },
-            { label: 'Intermediate', value: 1 },
-            { label: 'Nonresident Under 30', value: 2 },
+            { label: 'Family', value: 10 }, { label: 'Family of 2', value: 2 },
+            { label: 'Individual', value: 7 }, { label: 'Individual Under 30', value: 9 },
+            { label: 'Intermediate', value: 1 }, { label: 'Nonresident Under 30', value: 2 },
             { label: 'Spouse', value: 4 },
           ];
 
           const resignedAccountsBreakdown = [
-            { label: 'Family', value: 1 },
-            { label: 'Family of 2', value: 5 },
-            { label: 'Family Pref. Tier 2', value: 1 },
-            { label: 'Individual', value: 11 },
-            { label: 'Individual Pref. Tier 3', value: 1 },
-            { label: 'Intermediate', value: 10 },
-            { label: 'Intermediate Ext. School', value: 1 },
-            { label: 'Nonresident', value: 2 },
-            { label: 'Nonresident 30-34', value: 1 },
-            { label: 'Nonresident Family', value: 2 },
-            { label: 'Spouse', value: 2 },
-            { label: 'Spouse Preferred', value: 1 },
+            { label: 'Family', value: 1 }, { label: 'Family of 2', value: 5 },
+            { label: 'Family Pref. Tier 2', value: 1 }, { label: 'Individual', value: 11 },
+            { label: 'Individual Pref. Tier 3', value: 1 }, { label: 'Intermediate', value: 10 },
+            { label: 'Intermediate Ext. School', value: 1 }, { label: 'Nonresident', value: 2 },
+            { label: 'Nonresident 30-34', value: 1 }, { label: 'Nonresident Family', value: 2 },
+            { label: 'Spouse', value: 2 }, { label: 'Spouse Preferred', value: 1 },
           ];
 
-          // New Data Sets (2025 History)
           const pipelineHistoryData = [
             { month: 'Jan', Applicants: 89, Waitlist: 22, Processing: 166, Committee: 35, Invited: 77 },
             { month: 'Feb', Applicants: 91, Waitlist: 14, Processing: 167, Committee: 56, Invited: 58 },
@@ -182,7 +163,6 @@
             { month: 'Nov', Inflow: 33, Total: 376, Outflow: 35, Net: -2 },
           ];
 
-          // --- EXAMPLE CENSUS DATA (Based on standard club demographics) ---
           const censusAgeData = [
             { name: '< 18', value: 4359, fill: '#cbd5e1' },
             { name: '18-29', value: 2180, fill: '#94a3b8' },
@@ -202,7 +182,7 @@
           const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
           const formatCurrencyPrecise = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(val);
 
-          // Custom Tooltip for Pipeline to show descriptions
+          // Custom Tooltip for Pipeline
           const CustomPipelineTooltip = ({ active, payload }) => {
             if (active && payload && payload.length) {
               const data = payload[0].payload;
@@ -245,7 +225,6 @@
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   Membership Snapshot (YTD 2025)
                 </h2>
-                {/* Adjusted grid for new item */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4"> 
                   {ytdMetrics.map((metric, idx) => (
                     <div key={idx} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between h-full transition-shadow hover:shadow-md">
@@ -263,21 +242,18 @@
                 </div>
               </div>
 
-              {/* Top Level Monthly KPIs */}
+              {/* Monthly KPIs */}
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Monthly Performance
               </h2>
               
-              {/* Primary KPIs */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {/* Monthly Dues */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-sm font-semibold text-slate-500">Total Monthly Dues</h3>
-                    <div className="p-2 bg-blue-50 rounded-lg">
-                      <DollarSign className="w-5 h-5 text-blue-600" />
-                    </div>
+                    <div className="p-2 bg-blue-50 rounded-lg"><DollarSign className="w-5 h-5 text-blue-600" /></div>
                   </div>
                   <div className="text-2xl font-bold text-slate-900">{formatCurrency(2824009)}</div>
                   <p className="text-xs text-slate-400 mt-1">Recurring monthly revenue</p>
@@ -287,9 +263,7 @@
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-sm font-semibold text-slate-500">Net Dues Change</h3>
-                    <div className="p-2 bg-emerald-50 rounded-lg">
-                      <TrendingUp className="w-5 h-5 text-emerald-600" />
-                    </div>
+                    <div className="p-2 bg-emerald-50 rounded-lg"><TrendingUp className="w-5 h-5 text-emerald-600" /></div>
                   </div>
                   <div className="text-2xl font-bold text-emerald-600">+{formatCurrencyPrecise(1477.54)}</div>
                   <p className="text-xs text-emerald-600 mt-1 flex items-center font-medium">
@@ -302,9 +276,7 @@
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-sm font-semibold text-slate-500">New Accounts Value</h3>
-                    <div className="p-2 bg-emerald-50 rounded-lg">
-                      <UserPlus className="w-5 h-5 text-emerald-600" />
-                    </div>
+                    <div className="p-2 bg-emerald-50 rounded-lg"><UserPlus className="w-5 h-5 text-emerald-600" /></div>
                   </div>
                   <div className="text-2xl font-bold text-emerald-600">+{formatCurrency(8582)}</div>
                   <p className="text-xs text-slate-400 mt-1">From 35 new accounts</p>
@@ -314,9 +286,7 @@
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-sm font-semibold text-slate-500">Resigned Value</h3>
-                    <div className="p-2 bg-orange-50 rounded-lg">
-                      <UserMinus className="w-5 h-5 text-orange-600" />
-                    </div>
+                    <div className="p-2 bg-orange-50 rounded-lg"><UserMinus className="w-5 h-5 text-orange-600" /></div>
                   </div>
                   <div className="text-2xl font-bold text-orange-600">-{formatCurrency(7104)}</div>
                   <p className="text-xs text-slate-400 mt-1">From 38 resigned accounts</p>
@@ -381,17 +351,11 @@
                   </div>
                   <div className="h-64 w-full"> 
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={fluxData}
-                        margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-                      >
+                      <BarChart data={fluxData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                         <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} dy={10} />
                         <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} />
-                        <Tooltip 
-                          cursor={{fill: '#f1f5f9'}}
-                          contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}}
-                        />
+                        <Tooltip cursor={{fill: '#f1f5f9'}} contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
                         <Legend iconType="circle" wrapperStyle={{paddingTop: '20px'}} />
                         <ReferenceLine y={0} stroke="#94a3b8" />
                         <Bar dataKey="New" fill="#10b981" name="New (Inflow)" radius={[4, 4, 0, 0]} barSize={48} />
@@ -403,13 +367,12 @@
 
                 {/* Membership Pipeline Funnel */}
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
-                  {/* Header Area with new small tile */}
+                  {/* Header Area */}
                   <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                       <h3 className="text-lg font-bold text-slate-900">Membership Pipeline</h3>
                       <p className="text-sm text-slate-500">Current Candidate Status</p>
                     </div>
-                    {/* New Small Tile Next to Pipeline */}
                     <div className="flex items-center px-4 py-2 bg-blue-50 rounded-lg border border-blue-100 shadow-sm">
                         <Layers className="w-5 h-5 text-blue-600 mr-3" />
                         <div>
@@ -422,21 +385,10 @@
                   <div className="flex-grow flex flex-col md:flex-row gap-6">
                     <div className="h-[300px] w-full md:w-1/2">
                        <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          layout="vertical"
-                          data={pipelineData}
-                          margin={{ top: 0, right: 30, left: 40, bottom: 0 }}
-                        >
+                        <BarChart layout="vertical" data={pipelineData} margin={{ top: 0, right: 30, left: 40, bottom: 0 }}>
                           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
                           <XAxis type="number" hide />
-                          <YAxis 
-                            dataKey="name" 
-                            type="category" 
-                            width={90} 
-                            tick={{fill: '#475569', fontSize: 11, fontWeight: 600}} 
-                            axisLine={false} 
-                            tickLine={false} 
-                          />
+                          <YAxis dataKey="name" type="category" width={90} tick={{fill: '#475569', fontSize: 11, fontWeight: 600}} axisLine={false} tickLine={false} />
                           <Tooltip content={<CustomPipelineTooltip />} cursor={{fill: '#f8fafc'}} />
                           <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={32}>
                             {pipelineData.map((entry, index) => (
@@ -490,13 +442,9 @@
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="h-80 w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={pipelineHistoryData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
+                      <BarChart data={pipelineHistoryData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="month" tick={{fill: '#64748b'}} />
-                        {/* Added Y-Axis Label */}
                         <YAxis tick={{fill: '#64748b'}} label={{ value: 'Volume (Candidates)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
                         <Tooltip cursor={{fill: '#f1f5f9'}} contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
                         <Legend />
@@ -511,7 +459,7 @@
                 </div>
               </div>
 
-              {/* 2. MAC PIPELINE: CASH & CAPITAL ECONOMICS */}
+              {/* 2. CASH & CAPITAL ECONOMICS */}
               <div className="mb-12">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
@@ -520,13 +468,9 @@
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                   <div className="h-80 w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart
-                        data={cashEconomicsData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
+                      <ComposedChart data={cashEconomicsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="month" tick={{fill: '#64748b'}} />
-                        {/* Added Y-Axis Label */}
                         <YAxis tick={{fill: '#64748b'}} tickFormatter={(val) => `$${val/1000}k`} label={{ value: 'Cash Flow ($)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
                         <Tooltip formatter={(value) => formatCurrency(value)} contentStyle={{borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'}} />
                         <Legend />
@@ -547,13 +491,9 @@
                   Pipeline Flow Dynamics (2025)
                 </h2>
                 <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                  {/* Main Chart */}
                   <div className="h-80 w-full mb-8">
                     <ResponsiveContainer width="100%" height="100%">
-                      <ComposedChart
-                        data={pipelineFlowData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
+                      <ComposedChart data={pipelineFlowData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} />
                         <XAxis dataKey="month" tick={{fill: '#64748b'}} />
                         <YAxis yAxisId="left" tick={{fill: '#64748b'}} label={{ value: 'Movement (Count)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
@@ -567,8 +507,8 @@
                       </ComposedChart>
                     </ResponsiveContainer>
                   </div>
-
-                  {/* "How to Read This Chart" Guide - PROFESSIONAL */}
+                  
+                  {/* Legend/Info */}
                   <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 flex flex-col md:flex-row items-start gap-6">
                      <div className="flex-shrink-0 mt-1">
                         <div className="bg-purple-100 p-2 rounded-full">
@@ -674,15 +614,7 @@
                         <div className="h-64 w-full flex">
                             <ResponsiveContainer width="100%" height="100%">
                                  <PieChart>
-                                    <Pie
-                                        data={censusTypeData}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={80}
-                                        paddingAngle={5}
-                                        dataKey="value"
-                                    >
+                                    <Pie data={censusTypeData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
                                         {censusTypeData.map((entry, index) => (
                                             <Cell key={`cell-${index}`} fill={entry.fill} />
                                         ))}
@@ -756,12 +688,10 @@
                     </div>
                 </div>
               </div>
-              
             </div>
           );
         };
 
-        // --- 3. START THE DASHBOARD ---
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<MembershipDashboard />);
     </script>
