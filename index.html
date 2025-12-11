@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO and Accessibility Meta Tags -->
+    <meta name="description" content="Membership Analytics Dashboard - Real-time pipeline tracking, financial metrics, and demographic insights.">
+    <meta name="author" content="Multnomah Athletic Club">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="keywords" content="membership dashboard, analytics, pipeline tracking, membership metrics">
+    
     <title>Membership Dashboard</title>
     
+    <!-- 
+        PROTOTYPING SETUP WARNING:
+        This application uses in-browser Babel transpilation for rapid prototyping.
+        This is NOT suitable for production use due to performance implications.
+        For production, implement a proper build pipeline (Vite, Webpack, or similar).
+    -->
+    
+    <!-- Styling Framework -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- React Core Libraries (Pinned to v18.x for stability) -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel Standalone - PROTOTYPING ONLY: In-browser JSX transpilation -->
+    <!-- Pinned to 7.24.x for stability. Remove and use build tooling for production. -->
+    <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
 
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <!-- Data Visualization Library -->
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
     
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    <!-- Icon Library -->
+    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
 
     <style>
         body { background-color: #f8fafc; }
