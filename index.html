@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Dashboard</title>
+    <title>Membership Dashboard - Multnomah Athletic Club</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Multnomah Athletic Club Membership Analytics Dashboard - Track candidate pipeline, financial metrics, and demographic census data through dynamic visualizations.">
+    <meta name="keywords" content="membership dashboard, analytics, Multnomah Athletic Club, membership pipeline, financial reporting">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Membership Dashboard - Multnomah Athletic Club">
+    <meta property="og:description" content="Interactive dashboard for tracking membership pipeline, financial metrics, and demographic data.">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Membership Dashboard - Multnomah Athletic Club">
+    <meta name="twitter:description" content="Interactive dashboard for tracking membership pipeline, financial metrics, and demographic data.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -17,23 +31,99 @@
     <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
 
     <style>
-        body { background-color: #f8fafc; }
+        body { 
+            background-color: #f8fafc; 
+            margin: 0;
+        }
+        
+        /* Loading spinner and text styles */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .loading-text {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
 
-    <div id="root"></div>
+    <!-- Main application container -->
+    <div id="root" role="main" aria-label="Membership Dashboard Application">
+        <!-- Loading indicator while app initializes -->
+        <div class="loading-container">
+            <div class="loading-spinner" role="status" aria-label="Loading dashboard"></div>
+            <p class="loading-text">Loading Membership Dashboard...</p>
+        </div>
+    </div>
+    
+    <!-- Fallback content for users without JavaScript -->
+    <noscript>
+        <div style="padding: 2rem; text-align: center; font-family: sans-serif;">
+            <h1>JavaScript Required</h1>
+            <p>This Membership Dashboard requires JavaScript to be enabled in your browser.</p>
+            <p>Please enable JavaScript and refresh the page to view the dashboard.</p>
+        </div>
+    </noscript>
 
     <script type="text/babel">
-        // --- 1. SETUP LIBRARIES ---
+        // =============================================================================
+        // MEMBERSHIP DASHBOARD APPLICATION
+        // =============================================================================
+        // This React application provides interactive visualization of membership data
+        // including pipeline tracking, financial metrics, and demographic analytics.
+        //
+        // Dependencies:
+        // - React 18 (UI framework)
+        // - Recharts (data visualization)
+        // - Tailwind CSS (styling)
+        // - Lucide React (icons)
+        // - Babel Standalone (JSX transformation)
+        // =============================================================================
+
+        // --- 1. LIBRARY IMPORTS AND SETUP ---
         
+        // Import Recharts components for data visualization
         const { 
             BarChart, Bar, LineChart, Line, ComposedChart, Area, PieChart, Pie,
             XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, 
             Cell, ReferenceLine, LabelList 
         } = window.Recharts;
 
-        // We use window.lucideReact here to make sure icons render
+        // Import Lucide icons for UI elements
         const { 
             Users, DollarSign, Activity, FileText, UserMinus, UserPlus, 
             TrendingDown, TrendingUp, Wallet, CheckCircle, FileCheck, 
@@ -41,7 +131,71 @@
             Clock, AlertCircle, BookOpen, Info, MapPin, Calendar, User, Database
         } = window.lucideReact;
 
-        // --- 2. YOUR DASHBOARD CODE STARTS HERE ---
+        // --- 2. ERROR BOUNDARY COMPONENT ---
+        // Catches and handles runtime errors in the React component tree
+        // Provides graceful error handling and user feedback
+        
+        class ErrorBoundary extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { hasError: false, error: null, errorInfo: null };
+            }
+
+            static getDerivedStateFromError(error) {
+                return { hasError: true };
+            }
+
+            componentDidCatch(error, errorInfo) {
+                // Log error details for debugging
+                // Note: In production, consider integrating with error monitoring services
+                // like Sentry, LogRocket, or Bugsnag for better error tracking and alerting
+                console.error('Dashboard Error:', error, errorInfo);
+                this.setState({ error, errorInfo });
+            }
+
+            render() {
+                if (this.state.hasError) {
+                    return (
+                        <div style={{ 
+                            padding: '2rem', 
+                            textAlign: 'center', 
+                            maxWidth: '600px', 
+                            margin: '2rem auto',
+                            backgroundColor: '#fee2e2',
+                            borderRadius: '0.5rem',
+                            border: '1px solid #fecaca'
+                        }}>
+                            <h1 style={{ color: '#991b1b', marginBottom: '1rem' }}>
+                                Dashboard Error
+                            </h1>
+                            <p style={{ color: '#7f1d1d', marginBottom: '1rem' }}>
+                                An error occurred while loading the dashboard. Please refresh the page to try again.
+                            </p>
+                            {this.state.error && (
+                                <details style={{ 
+                                    textAlign: 'left', 
+                                    backgroundColor: 'white', 
+                                    padding: '1rem',
+                                    borderRadius: '0.25rem',
+                                    fontSize: '0.875rem'
+                                }}>
+                                    <summary style={{ cursor: 'pointer', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+                                        Error Details
+                                    </summary>
+                                    <pre style={{ overflow: 'auto', fontSize: '0.75rem' }}>
+                                        {this.state.error.toString()}
+                                    </pre>
+                                </details>
+                            )}
+                        </div>
+                    );
+                }
+
+                return this.props.children;
+            }
+        }
+
+        // --- 3. MAIN DASHBOARD COMPONENT ---
 
         const MembershipDashboard = () => {
           // November Data
@@ -698,8 +852,15 @@
           );
         };
 
+        // --- 4. APPLICATION INITIALIZATION ---
+        // Render the dashboard with error boundary protection
+        
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<MembershipDashboard />);
+        root.render(
+            <ErrorBoundary>
+                <MembershipDashboard />
+            </ErrorBoundary>
+        );
     </script>
 </body>
 </html>
