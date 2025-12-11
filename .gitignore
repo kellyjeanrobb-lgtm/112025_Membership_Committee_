@@ -1,0 +1,34 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.sublime-project
+.sublime-workspace
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.log
+
+# Test and Development Files
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Don't ignore the actual application files
+!index.html
+!README.md
+!CONTRIBUTING.md
