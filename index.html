@@ -3,28 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Dashboard</title>
+    <meta name="description" content="Multnomah Athletic Club Membership Dashboard - Real-time analytics for membership pipeline, financials, and census data">
+    <meta name="author" content="Multnomah Athletic Club">
+    <title>Membership Dashboard - Multnomah Athletic Club</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- React 18 Production Build -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 
+        Babel Standalone v7.23.6 - PROTOTYPING ONLY
+        WARNING: This in-browser JSX compilation is for rapid prototyping and development.
+        For production deployments, pre-compile JSX using a proper build system (Vite, webpack, etc.).
+    -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <!-- Recharts for Data Visualization -->
+    <script src="https://unpkg.com/recharts@2.10.3/dist/Recharts.js"></script>
     
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    <!-- Lucide React Icons -->
+    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.min.js"></script>
 
     <style>
         body { background-color: #f8fafc; }
+        /* Skip link for keyboard navigation accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <!-- Accessibility: Skip navigation link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div id="root"></div>
+    <div id="root" role="application" aria-label="Membership Dashboard Application"></div>
 
     <script type="text/babel">
+        /**
+         * MULTNOMAH ATHLETIC CLUB - MEMBERSHIP DASHBOARD
+         * 
+         * Purpose: Real-time analytics dashboard for membership committee operations
+         * Tech Stack: React 18, Recharts, Tailwind CSS, Lucide Icons
+         * 
+         * Architecture:
+         * - Single-page React application with embedded data
+         * - Client-side rendering with in-browser JSX compilation (Babel Standalone)
+         * - Responsive design using Tailwind CSS utility classes
+         * 
+         * Key Metrics Tracked:
+         * - Membership pipeline flow (5-stage governance process)
+         * - Monthly financial performance (dues, deposits, fees)
+         * - YTD cumulative metrics
+         * - Census demographics and trends
+         * 
+         * Note: This uses in-browser Babel compilation for rapid prototyping.
+         * For production, migrate to a build system (Vite, webpack, etc.) for:
+         * - Faster load times (pre-compiled JSX)
+         * - Better error handling and debugging
+         * - Code splitting and optimization
+         * - TypeScript support
+         */
+
         // --- 1. SETUP LIBRARIES ---
         
         const { 
@@ -200,7 +252,7 @@
           return (
             <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
               {/* Header */}
-              <header className="mb-8 border-b border-slate-200 pb-6">
+              <header id="main-content" className="mb-8 border-b border-slate-200 pb-6" role="banner">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   <div>
                     <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Membership Dashboard</h1>
@@ -220,8 +272,8 @@
               </header>
 
               {/* YTD Snapshot Section */}
-              <div className="mb-10">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-10" aria-labelledby="ytd-heading">
+                <h2 id="ytd-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   Membership Snapshot (YTD 2025)
                 </h2>
@@ -240,10 +292,11 @@
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Monthly KPIs */}
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section aria-labelledby="monthly-performance-heading">
+              <h2 id="monthly-performance-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Monthly Performance
               </h2>
@@ -415,7 +468,8 @@
               </div>
 
               {/* Financial Details Grid */}
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section aria-labelledby="financial-heading">
+              <h2 id="financial-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Payments & Financial Details
               </h2>
@@ -432,10 +486,11 @@
                   </div>
                 ))}
               </div>
+              </section>
 
               {/* 1. MAC PIPELINE: STAGE BREAKDOWN */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-12" aria-labelledby="pipeline-breakdown-heading">
+                <h2 id="pipeline-breakdown-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Stage Breakdown (2025)
                 </h2>
@@ -457,11 +512,11 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* 2. CASH & CAPITAL ECONOMICS */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-12" aria-labelledby="cash-economics-heading">
+                <h2 id="cash-economics-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Cash & Capital Economics (2025)
                 </h2>
@@ -482,11 +537,11 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* 3. PIPELINE FLOW DYNAMICS */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-12" aria-labelledby="flow-dynamics-heading">
+                <h2 id="flow-dynamics-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-purple-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Pipeline Flow Dynamics (2025)
                 </h2>
@@ -551,11 +606,11 @@
                      </div>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* --- CURRENT MEMBERSHIP CENSUS (SNAPSHOT) --- */}
-              <div className="mb-12">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-12" aria-labelledby="census-heading">
+                <h2 id="census-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-sky-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Current Membership Census (Snapshot)
                 </h2>
@@ -632,11 +687,11 @@
                         </div>
                      </div>
                 </div>
-              </div>
+              </section>
 
               {/* --- COMMITTEE BUSINESS SECTION --- */}
-              <div className="mb-12">
-                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+              <section className="mb-12" aria-labelledby="committee-heading">
+                 <h2 id="committee-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-indigo-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Committee Updates & Business
                 </h2>
@@ -693,7 +748,7 @@
                         </ul>
                     </div>
                 </div>
-              </div>
+              </section>
             </div>
           );
         };
