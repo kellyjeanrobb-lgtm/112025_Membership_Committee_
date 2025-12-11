@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multnomah Athletic Club Membership Analytics Dashboard - Interactive data visualizations for membership pipeline, financial metrics, and demographic census data">
+    <meta name="theme-color" content="#f8fafc">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
     <title>Membership Dashboard</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Pinned React libraries for stability -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel Standalone - PROTOTYPING ONLY: This in-browser transpilation is for rapid development.
+         Production deployments should use a proper build system (Vite, Webpack, etc.) -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
 
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <!-- Pinned Recharts for chart visualizations -->
+    <script src="https://unpkg.com/recharts@2.10.3/dist/Recharts.js"></script>
     
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    <!-- Pinned Lucide React for icons -->
+    <script src="https://unpkg.com/lucide-react@0.294.0/dist/umd/lucide-react.min.js"></script>
 
     <style>
         body { background-color: #f8fafc; }
@@ -22,9 +30,16 @@
 </head>
 <body>
 
-    <div id="root"></div>
+    <div id="root" role="main" aria-label="Membership Analytics Dashboard"></div>
 
     <script type="text/babel">
+        /* 
+         * PROTOTYPING NOTICE: This script uses Babel Standalone for in-browser JSX transpilation.
+         * This approach is suitable for prototyping and development only.
+         * For production deployment, migrate to a proper build system (Vite, Webpack, Create React App, etc.)
+         * to pre-compile JSX and optimize bundle size, load time, and browser compatibility.
+         */
+        
         // --- 1. SETUP LIBRARIES ---
         
         const { 
@@ -43,14 +58,21 @@
 
         // --- 2. YOUR DASHBOARD CODE STARTS HERE ---
 
+        /**
+         * Main Dashboard Component
+         * Displays membership analytics including pipeline status, financial metrics,
+         * and demographic census data for the Multnomah Athletic Club
+         */
         const MembershipDashboard = () => {
-          // November Data
+          // November Data - Monthly membership flux showing inflow vs outflow
+          // Tracks both individual headcount and account-level changes
           const fluxData = [
             { name: 'Headcount', New: 61, Resigned: 53, Net: 8 },
             { name: 'Accounts', New: 35, Resigned: 38, Net: -3 }
           ];
 
-          // Updated Pipeline Data for November
+          // Pipeline Data - Current snapshot of candidates at each stage of the membership process
+          // Each stage represents a governance checkpoint from initial application through invitation
           const pipelineData = [
             { 
               name: 'Applicants', 
@@ -86,7 +108,8 @@
             }
           ];
 
-          // November Financials
+          // November Financials - Key revenue metrics for the current month
+          // Includes deposits, capital contributions, fees, and reinstatement charges
           const financials = [
             { label: 'New Deposits', value: 52300, icon: Wallet, color: 'text-emerald-600', bg: 'bg-emerald-100' },
             { label: 'Remaining Election', value: 134596, icon: DollarSign, color: 'text-blue-600', bg: 'bg-blue-100' },
@@ -94,7 +117,8 @@
             { label: 'Reinstatements', value: 1477.54, icon: Activity, color: 'text-purple-600', bg: 'bg-purple-100' },
           ];
 
-          // YTD Metrics
+          // YTD Metrics - Year-to-date aggregated performance indicators
+          // Provides high-level summary of membership activity throughout 2025
           const ytdMetrics = [
             { label: 'Applications Reviewed', value: 380, icon: ClipboardList, color: 'text-blue-600', bg: 'bg-blue-50' },
             { label: 'New Members Onboarded', value: 327, icon: UserPlus, color: 'text-emerald-600', bg: 'bg-emerald-50' },
@@ -105,6 +129,7 @@
             { label: 'Jrs Transferred to Int.', value: 249, icon: UserCheck, color: 'text-cyan-600', bg: 'bg-cyan-50' },
           ];
 
+          // New Accounts Breakdown - Distribution of new accounts by membership type
           const newAccountsBreakdown = [
             { label: 'Family', value: 10 }, { label: 'Family of 2', value: 2 },
             { label: 'Individual', value: 7 }, { label: 'Individual Under 30', value: 9 },
@@ -112,6 +137,7 @@
             { label: 'Spouse', value: 4 },
           ];
 
+          // Resigned Accounts Breakdown - Distribution of resignations by membership type
           const resignedAccountsBreakdown = [
             { label: 'Family', value: 1 }, { label: 'Family of 2', value: 5 },
             { label: 'Family Pref. Tier 2', value: 1 }, { label: 'Individual', value: 11 },
@@ -121,6 +147,8 @@
             { label: 'Spouse', value: 2 }, { label: 'Spouse Preferred', value: 1 },
           ];
 
+          // Pipeline History Data - Monthly time series showing pipeline volume at each stage
+          // Tracks trends across the full year to identify seasonal patterns
           const pipelineHistoryData = [
             { month: 'Jan', Applicants: 89, Waitlist: 22, Processing: 166, Committee: 35, Invited: 77 },
             { month: 'Feb', Applicants: 91, Waitlist: 14, Processing: 167, Committee: 56, Invited: 58 },
@@ -135,6 +163,8 @@
             { month: 'Nov', Applicants: 113, Waitlist: 18, Processing: 111, Committee: 44, Invited: 90 },
           ];
 
+          // Cash Economics Data - Monthly revenue breakdown across different payment categories
+          // Combines application fees, deposits, and capital contributions for financial oversight
           const cashEconomicsData = [
             { month: 'Jan', AppFees: 2100, Deposits: 61200, Capital: 36000, Total: 99300 },
             { month: 'Feb', AppFees: 1400, Deposits: 65000, Capital: 102500, Total: 168900 },
@@ -149,6 +179,8 @@
             { month: 'Nov', AppFees: 1600, Deposits: 52300, Capital: 134596, Total: 188496 },
           ];
 
+          // Pipeline Flow Data - Monthly inflow/outflow tracking for pipeline management
+          // Shows net change and total pipeline size over time
           const pipelineFlowData = [
             { month: 'Jan', Inflow: 52, Total: 372, Outflow: 37, Net: 15 },
             { month: 'Feb', Inflow: 25, Total: 390, Outflow: 28, Net: -3 },
@@ -163,6 +195,7 @@
             { month: 'Nov', Inflow: 33, Total: 376, Outflow: 35, Net: -2 },
           ];
 
+          // Census Age Data - Member distribution across age groups for demographic analysis
           const censusAgeData = [
             { name: '< 18', value: 4359, fill: '#cbd5e1' },
             { name: '18-29', value: 2180, fill: '#94a3b8' },
@@ -171,6 +204,7 @@
             { name: '70+', value: 2181, fill: '#334155' },
           ];
 
+          // Census Type Data - Member distribution by membership category
           const censusTypeData = [
             { name: 'Family', value: 8720, fill: '#3b82f6' },
             { name: 'Individual', value: 6540, fill: '#10b981' },
@@ -179,10 +213,24 @@
             { name: 'Other', value: 1089, fill: '#94a3b8' },
           ];
 
+          /**
+           * Formats a number as currency with no decimal places
+           * @param {number} val - The value to format
+           * @returns {string} Formatted currency string (e.g., "$1,234")
+           */
           const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+          
+          /**
+           * Formats a number as currency with exactly 2 decimal places
+           * @param {number} val - The value to format
+           * @returns {string} Formatted currency string (e.g., "$1,234.56")
+           */
           const formatCurrencyPrecise = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(val);
 
-          // Custom Tooltip for Pipeline
+          /**
+           * Custom Tooltip Component for Pipeline Visualization
+           * Displays detailed information when hovering over pipeline stages
+           */
           const CustomPipelineTooltip = ({ active, payload }) => {
             if (active && payload && payload.length) {
               const data = payload[0].payload;
@@ -220,7 +268,7 @@
               </header>
 
               {/* YTD Snapshot Section */}
-              <div className="mb-10">
+              <section className="mb-10" aria-label="Year-to-date membership snapshot">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   Membership Snapshot (YTD 2025)
@@ -240,9 +288,10 @@
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Monthly KPIs */}
+              <section aria-label="November monthly performance metrics">
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Monthly Performance
@@ -338,13 +387,13 @@
                        <div className="text-xs text-slate-400 mt-1">Transfers in November</div>
                     </div>
                  </div>
-              </div>
+              </section>
 
               {/* Charts Section */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-10">
+              <section className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-10" aria-label="Membership flux and pipeline visualizations">
                 
                 {/* Membership Flux Chart */}
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col" role="figure" aria-label="Membership flux chart comparing inflow vs outflow">
                   <div className="mb-4">
                     <h3 className="text-lg font-bold text-slate-900">Membership Flux (Nov)</h3>
                     <p className="text-sm text-slate-500">Comparison of Inflow vs. Outflow</p>
@@ -366,7 +415,7 @@
                 </div>
 
                 {/* Membership Pipeline Funnel */}
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col" role="figure" aria-label="Membership pipeline funnel showing candidate status">
                   {/* Header Area */}
                   <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -412,9 +461,10 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* Financial Details Grid */}
+              <section aria-label="November payments and financial details">
               <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                 <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                 November Payments & Financial Details
@@ -431,10 +481,10 @@
                     </div>
                   </div>
                 ))}
-              </div>
+              </section>
 
               {/* 1. MAC PIPELINE: STAGE BREAKDOWN */}
-              <div className="mb-12">
+              <section className="mb-12" aria-label="Pipeline stage breakdown 2025 year-to-date">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Stage Breakdown (2025)
@@ -457,10 +507,10 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* 2. CASH & CAPITAL ECONOMICS */}
-              <div className="mb-12">
+              <section className="mb-12" aria-label="Cash and capital economics 2025 year-to-date">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-emerald-600 w-2 h-6 mr-3 rounded-sm"></span>
                   MAC Pipeline: Cash & Capital Economics (2025)
@@ -482,10 +532,10 @@
                     </ResponsiveContainer>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* 3. PIPELINE FLOW DYNAMICS */}
-              <div className="mb-12">
+              <section className="mb-12" aria-label="Pipeline flow dynamics 2025 year-to-date">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-purple-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Pipeline Flow Dynamics (2025)
@@ -551,10 +601,10 @@
                      </div>
                   </div>
                 </div>
-              </div>
+              </section>
 
               {/* --- CURRENT MEMBERSHIP CENSUS (SNAPSHOT) --- */}
-              <div className="mb-12">
+              <section className="mb-12" aria-label="Current membership census snapshot">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-sky-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Current Membership Census (Snapshot)
@@ -632,10 +682,10 @@
                         </div>
                      </div>
                 </div>
-              </div>
+              </section>
 
               {/* --- COMMITTEE BUSINESS SECTION --- */}
-              <div className="mb-12">
+              <section className="mb-12" aria-label="Committee updates and business items">
                  <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
                   <span className="bg-indigo-600 w-2 h-6 mr-3 rounded-sm"></span>
                   Committee Updates & Business
@@ -693,7 +743,7 @@
                         </ul>
                     </div>
                 </div>
-              </div>
+              </section>
             </div>
           );
         };
