@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Membership Dashboard</title>
+    <meta name="description" content="Multnomah Athletic Club Membership Analytics Dashboard - Interactive visualization of membership pipeline, financials, and demographic insights">
+    <meta name="author" content="Multnomah Athletic Club">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Membership Dashboard - Multnomah Athletic Club</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel Standalone: PROTOTYPING ONLY - Pin version for stability. Not for production use. -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
 
     <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
     
@@ -198,9 +202,9 @@
           };
 
           return (
-            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900" role="application" aria-label="Membership Analytics Dashboard">
               {/* Header */}
-              <header className="mb-8 border-b border-slate-200 pb-6">
+              <header className="mb-8 border-b border-slate-200 pb-6" role="banner">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   <div>
                     <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Membership Dashboard</h1>
@@ -219,6 +223,7 @@
                 </div>
               </header>
 
+              <main role="main">
               {/* YTD Snapshot Section */}
               <div className="mb-10">
                 <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
@@ -694,6 +699,7 @@
                     </div>
                 </div>
               </div>
+              </main>
             </div>
           );
         };
