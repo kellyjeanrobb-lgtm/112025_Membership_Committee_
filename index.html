@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multnomah Athletic Club Membership Analytics Dashboard - Real-time insights into membership pipeline, financials, and demographics">
+    <meta name="theme-color" content="#1e293b">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Membership Dashboard</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -10,7 +13,9 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel Standalone: PROTOTYPING ONLY - Pin version for stability -->
+    <!-- For production, migrate to a proper build system (Vite, Create React App, or Next.js) -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
 
     <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
     
@@ -18,13 +23,45 @@
 
     <style>
         body { background-color: #f8fafc; }
+        /* Skip link for keyboard navigation accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e293b;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
 
-    <div id="root"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="root" role="main" aria-label="Membership Dashboard Application"></div>
 
     <script type="text/babel">
+        /**
+         * Membership Analytics Dashboard
+         * 
+         * This dashboard provides real-time insights into:
+         * - Membership pipeline tracking (5-stage governance process)
+         * - Financial metrics (dues, fees, capital contributions)
+         * - Member demographics and census data
+         * - Year-to-date performance indicators
+         * 
+         * Technology Stack:
+         * - React 18 (via CDN)
+         * - Recharts (data visualization)
+         * - Tailwind CSS (styling)
+         * - Lucide React (icons)
+         * - Babel Standalone (JSX transpilation - prototyping only)
+         */
+        
         // --- 1. SETUP LIBRARIES ---
         
         const { 
@@ -41,16 +78,35 @@
             Clock, AlertCircle, BookOpen, Info, MapPin, Calendar, User, Database
         } = window.lucideReact;
 
-        // --- 2. YOUR DASHBOARD CODE STARTS HERE ---
-
+        // --- 2. DASHBOARD COMPONENT ---
+        
+        /**
+         * Main Dashboard Component
+         * 
+         * Renders the complete membership analytics dashboard including:
+         * - YTD snapshot metrics
+         * - Monthly performance KPIs
+         * - Pipeline funnel visualization
+         * - Financial breakdowns and cash economics
+         * - Member census demographics
+         */
         const MembershipDashboard = () => {
-          // November Data
+          // --- DATA DEFINITIONS ---
+          
+          /**
+           * Member Flux Data (November)
+           * Tracks new members vs. resignations for both headcount and accounts
+           */
           const fluxData = [
             { name: 'Headcount', New: 61, Resigned: 53, Net: 8 },
             { name: 'Accounts', New: 35, Resigned: 38, Net: -3 }
           ];
 
-          // Updated Pipeline Data for November
+          /**
+           * Membership Pipeline Data (November)
+           * Represents the 5-stage governance process from application to invitation
+           * Each stage includes volume, visual styling, and descriptive text
+           */
           const pipelineData = [
             { 
               name: 'Applicants', 
@@ -86,7 +142,10 @@
             }
           ];
 
-          // November Financials
+          /**
+           * Financial Metrics (November)
+           * Key financial indicators including deposits, fees, and contributions
+           */
           const financials = [
             { label: 'New Deposits', value: 52300, icon: Wallet, color: 'text-emerald-600', bg: 'bg-emerald-100' },
             { label: 'Remaining Election', value: 134596, icon: DollarSign, color: 'text-blue-600', bg: 'bg-blue-100' },
@@ -94,7 +153,10 @@
             { label: 'Reinstatements', value: 1477.54, icon: Activity, color: 'text-purple-600', bg: 'bg-purple-100' },
           ];
 
-          // YTD Metrics
+          /**
+           * Year-to-Date Metrics (2025)
+           * High-level performance indicators across the full year
+           */
           const ytdMetrics = [
             { label: 'Applications Reviewed', value: 380, icon: ClipboardList, color: 'text-blue-600', bg: 'bg-blue-50' },
             { label: 'New Members Onboarded', value: 327, icon: UserPlus, color: 'text-emerald-600', bg: 'bg-emerald-50' },
@@ -179,10 +241,26 @@
             { name: 'Other', value: 1089, fill: '#94a3b8' },
           ];
 
+          // --- UTILITY FUNCTIONS ---
+          
+          /**
+           * Format currency values without decimal places
+           * @param {number} val - The value to format
+           * @returns {string} Formatted currency string (e.g., "$1,234")
+           */
           const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+          
+          /**
+           * Format currency values with decimal precision
+           * @param {number} val - The value to format
+           * @returns {string} Formatted currency string (e.g., "$1,234.56")
+           */
           const formatCurrencyPrecise = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(val);
 
-          // Custom Tooltip for Pipeline
+          /**
+           * Custom Tooltip Component for Pipeline Charts
+           * Displays detailed stage information on hover
+           */
           const CustomPipelineTooltip = ({ active, payload }) => {
             if (active && payload && payload.length) {
               const data = payload[0].payload;
@@ -198,31 +276,31 @@
           };
 
           return (
-            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900" id="main-content">
               {/* Header */}
-              <header className="mb-8 border-b border-slate-200 pb-6">
+              <header className="mb-8 border-b border-slate-200 pb-6" role="banner">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
                   <div>
                     <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Membership Dashboard</h1>
                     <p className="text-slate-500 mt-2 text-lg">November 2025 Performance Overview</p>
                   </div>
-                  <div className="mt-6 md:mt-0 flex gap-4">
+                  <div className="mt-6 md:mt-0 flex gap-4" role="region" aria-label="Summary Statistics">
                     <div className="px-6 py-4 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-1">Total Members</span>
-                      <div className="text-3xl font-black text-slate-800">21,799</div>
+                      <div className="text-3xl font-black text-slate-800" aria-label="21,799 total members">21,799</div>
                     </div>
                     <div className="px-6 py-4 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-1">Total Accounts</span>
-                      <div className="text-3xl font-black text-slate-800">11,550</div>
+                      <div className="text-3xl font-black text-slate-800" aria-label="11,550 total accounts">11,550</div>
                     </div>
                   </div>
                 </div>
               </header>
 
               {/* YTD Snapshot Section */}
-              <div className="mb-10">
-                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                  <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm"></span>
+              <section className="mb-10" aria-labelledby="ytd-snapshot-heading">
+                <h2 id="ytd-snapshot-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                  <span className="bg-slate-800 w-2 h-6 mr-3 rounded-sm" aria-hidden="true"></span>
                   Membership Snapshot (YTD 2025)
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4"> 
@@ -240,11 +318,12 @@
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Monthly KPIs */}
-              <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm"></span>
+              <section aria-labelledby="monthly-performance-heading">
+              <h2 id="monthly-performance-heading" className="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                <span className="bg-blue-600 w-2 h-6 mr-3 rounded-sm" aria-hidden="true"></span>
                 November Monthly Performance
               </h2>
               
@@ -339,17 +418,20 @@
                     </div>
                  </div>
               </div>
+              </section>
 
               {/* Charts Section */}
+              <section aria-labelledby="charts-section-heading">
+              <h2 id="charts-section-heading" className="sr-only">Data Visualizations</h2>
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-10">
                 
                 {/* Membership Flux Chart */}
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col" role="region" aria-label="Membership flux chart">
                   <div className="mb-4">
                     <h3 className="text-lg font-bold text-slate-900">Membership Flux (Nov)</h3>
                     <p className="text-sm text-slate-500">Comparison of Inflow vs. Outflow</p>
                   </div>
-                  <div className="h-64 w-full"> 
+                  <div className="h-64 w-full" role="img" aria-label="Bar chart showing 61 new members and 53 resignations for headcount, 35 new and 38 resigned for accounts"> 
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={fluxData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
@@ -366,7 +448,7 @@
                 </div>
 
                 {/* Membership Pipeline Funnel */}
-                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
+                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col" role="region" aria-label="Membership pipeline funnel">
                   {/* Header Area */}
                   <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -694,6 +776,7 @@
                     </div>
                 </div>
               </div>
+              </section>
             </div>
           );
         };
