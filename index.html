@@ -23,10 +23,25 @@
 
     <style>
         body { background-color: #f8fafc; }
+        /* Skip link for keyboard navigation accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e293b;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root" role="main" aria-label="Membership Dashboard Application"></div>
 
     <script type="text/babel">
@@ -261,7 +276,7 @@
           };
 
           return (
-            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900">
+            <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-900" id="main-content">
               {/* Header */}
               <header className="mb-8 border-b border-slate-200 pb-6" role="banner">
                 <div className="flex flex-col md:flex-row md:items-center justify-between">
